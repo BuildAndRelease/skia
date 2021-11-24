@@ -210,7 +210,7 @@ SkCodec::Result SkCodec::getYUVAPlanes(const SkYUVAPixmaps& yuvaPixmaps) {
 }
 
 bool SkCodec::conversionSupported(const SkImageInfo& dst, bool srcIsOpaque, bool needsColorXform) {
-    if (!valid_alpha(dst.alphaType(), srcIsOpaque)) {
+    if (!valid_alpha(dst.alphaType(), dst.isOpaque())) {
         return false;
     }
 
