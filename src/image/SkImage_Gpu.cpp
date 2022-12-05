@@ -631,7 +631,7 @@ sk_sp<SkImage> SkImage::MakeCrossContextFromPixmap(GrDirectContext* dContext,
                                                    bool limitToMaxTextureSize) {
     // Some backends or drivers don't support (safely) moving resources between contexts
     if (!dContext || !dContext->priv().caps()->crossContextTextureSupport()) {
-        return SkImage::MakeRasterCopy(originalPixmap);
+        return nullptr;
     }
 
     // If non-power-of-two mipmapping isn't supported, ignore the client's request
@@ -660,7 +660,7 @@ sk_sp<SkImage> SkImage::MakeCrossContextFromPixmap(GrDirectContext* dContext,
     GrMipmapped mipmapped = buildMips ? GrMipmapped::kYes : GrMipmapped::kNo;
     auto [view, ct] = GrMakeUncachedBitmapProxyView(dContext, bmp, mipmapped);
     if (!view) {
-        return SkImage::MakeRasterCopy(*pixmap);
+        return nullptr;
     }
 
     sk_sp<GrTexture> texture = sk_ref_sp(view.proxy()->peekTexture());
